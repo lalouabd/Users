@@ -12,18 +12,14 @@ public class Post {
     @JsonProperty("service")
     private final String service;
 
-    @JsonProperty("city")
-    private final String City;
 
-    @JsonProperty("startDate")
-    private final Date startDate;
+
+
     private  final UUID id;
 
 
-    public Post(String service, String city, Date startDate, UUID id) {
+    public Post(String service,  UUID id) {
         this.service = service;
-        City = city;
-        this.startDate = startDate;
         this.id = id;
     }
 
@@ -31,11 +27,5 @@ public class Post {
         return service;
     }
 
-    public String getCity() {
-        return City;
-    }
 
-    public Date getStartDate() {
-        return startDate;
-    }
 }
