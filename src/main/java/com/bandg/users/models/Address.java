@@ -1,7 +1,8 @@
 package com.bandg.users.models;
 
-public class Adress {
+public class Address {
     private City city;
-    private
+    private String address;
+
 
 }

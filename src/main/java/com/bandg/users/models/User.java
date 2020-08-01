@@ -5,6 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+
 import java.sql.Date;
 import java.util.Collection;
 import java.util.List;
@@ -37,9 +38,11 @@ public class User  implements UserDetails {
             Date dob,
             List<SimpleGrantedAuthority> authorities,
             String imageLink,
-            String password, UUID postId,
+            String password,
+            UUID postId,
             boolean isActivated,
-            boolean isLocked) {
+            boolean isLocked
+    ) {
 
         this.email = email;
         this.fullName = fullName;
@@ -66,7 +69,6 @@ public class User  implements UserDetails {
 
     @Override
     public String getUsername() {
-
         return email;
     }
 
