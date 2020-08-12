@@ -1,1 +1,8 @@
-
+app:
+ datasource :
+   jdbc-url : jdbc:postgresql://localhost:5431/db
+   username : postgres
+   password : postgres
+   pool-size : 30
+   flyway:
+     baselineOnMigrate : true

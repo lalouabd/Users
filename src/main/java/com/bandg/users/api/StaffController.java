@@ -32,7 +32,7 @@ public class StaffController {
 
         return staffService.getStaffById(id);
     }
-    @DeleteMapping("/api/deleteStaff/{id}")
+        @DeleteMapping("/api/deleteStaff/{id}")
     public int deleteStaffById(@PathVariable("id") int id){
         return staffService.deleteStaffById(id);
     }
