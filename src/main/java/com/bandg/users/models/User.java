@@ -1,9 +1,13 @@
 package com.bandg.users.models;
 
+import com.bandg.users.dao.PostDao;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.beans.factory.annotation.Autowired;
+/*
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+*/
 
 
 import java.sql.Date;
@@ -11,7 +15,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
-public class User  implements UserDetails {
+public class User   {
 
     @JsonProperty("email")
     private final String email;
@@ -20,10 +24,11 @@ public class User  implements UserDetails {
     @JsonProperty("dob")
     private final Date dob;
 
-    @JsonProperty("Authorities")
-    private final List<SimpleGrantedAuthority> authorities;
-    @JsonProperty("imageLink")
+   // @JsonProperty("Authorities")
+   // private final List<SimpleGrantedAuthority> authorities;
+    @JsonProperty("image")
     private final String imageLink;
+    @JsonProperty("password")
     private final String password;
     @JsonProperty("postId")
     private final UUID  postId;
@@ -32,11 +37,14 @@ public class User  implements UserDetails {
 
     private  boolean isLocked;
 
+    @Autowired
+    private   PostDao postdao;
+
     public User(
             String email,
             String fullName,
             Date dob,
-            List<SimpleGrantedAuthority> authorities,
+         //   List<SimpleGrantedAuthority> authorities,
             String imageLink,
             String password,
             UUID postId,
@@ -47,7 +55,7 @@ public class User  implements UserDetails {
         this.email = email;
         this.fullName = fullName;
         this.dob = dob;
-        this.authorities = authorities;
+       // this.authorities = authorities;
         this.imageLink = imageLink;
         this.password = password;
         this.postId = postId;
@@ -56,7 +64,7 @@ public class User  implements UserDetails {
     }
 
 
-    @Override
+ /*   @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;
     }
@@ -92,5 +100,5 @@ public class User  implements UserDetails {
     public boolean isEnabled() {
 
         return isActivated;
-    }
+    }*/
 }

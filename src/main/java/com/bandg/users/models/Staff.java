@@ -27,8 +27,8 @@ public class Staff {
     private final String grade  ;//8
     @JsonProperty("fucntion")
     private final String function;//9
-    @JsonProperty("postid")
-    private final UUID postId   ; ////10
+    @JsonProperty("post")
+    private final String post   ; ////10
     @JsonProperty("category")
     private final String category; //11
     @JsonProperty("echelon")
@@ -49,7 +49,7 @@ public class Staff {
 
 
     public Staff(
-            int id, 
+            int id,
             Date birthDay,
             String birthPlace,
             Gender sex,
@@ -59,7 +59,7 @@ public class Staff {
             String dateEmbauche,
             String grade,
             String function,
-            UUID postId,
+            String post,
             String category,
             int echelon,
             String entEffect,
@@ -78,7 +78,7 @@ public class Staff {
         this.dateEmbauche = dateEmbauche;
         this.grade = grade;
         this.function = function;
-        this.postId = postId;
+        this.post = post;
         this.category = category;
         this.echelon = echelon;
         this.entEffect = entEffect;
@@ -89,35 +89,38 @@ public class Staff {
         this.imagePath = imagePath;
     }
     public Staff(
-            int id,
-            Date birthDay,
-            String birthPlace,
-            Gender sex,
-            String cin,
-            String sitFam,
-            String nationalite,
-            String dateEmbauche,
-            String grade,
-            String function,
-            UUID postId,
-            String category,
-            int echelon,
-            String entEffect,
-            String sectionAnalytique,
-            String regimeRetraite,
-            int affilRecore,
-            String dateDerPromo) {
+            @JsonProperty("id") int id,
+            @JsonProperty("birthday") Date birthDay,
+            @JsonProperty("birthplace") String birthPlace,
+            @JsonProperty("Gender") String sex,
+            @JsonProperty("cin")String cin,
+            @JsonProperty("sitfam") String sitFam,
+            @JsonProperty("nationalite")String nationalite,
+            @JsonProperty("dateEmbauche") String dateEmbauche,
+            @JsonProperty("grade")String grade,
+            @JsonProperty("fucntion")  String function,
+            @JsonProperty("post")String post,
+            @JsonProperty("category")String category,
+            @JsonProperty("echelon") int echelon,
+            @JsonProperty("enteffect")String entEffect,
+            @JsonProperty("sectionanalytique")   String sectionAnalytique,
+            @JsonProperty("regret")  String regimeRetraite,
+            @JsonProperty("affilrecore")  int affilRecore,
+            @JsonProperty("datederpromo")  String dateDerPromo) {
         this.id = id;
         this.birthDay = birthDay;
         this.birthPlace = birthPlace;
-        this.sex = sex;
+        this.sex = sex.trim()
+                .equalsIgnoreCase("m") ?
+                Gender.MALE:
+                Gender.FEMALE;
         this.cin = cin;
         this.sitFam = sitFam;
         this.nationalite = nationalite;
         this.dateEmbauche = dateEmbauche;
         this.grade = grade;
         this.function = function;
-        this.postId = postId;
+        this.post = post;
         this.category = category;
         this.echelon = echelon;
         this.entEffect = entEffect;
@@ -167,9 +170,6 @@ public class Staff {
         return function;
     }
 
-    public UUID getPostId() {
-        return postId;
-    }
 
     public String getCategory() {
         return category;
@@ -201,5 +201,30 @@ public class Staff {
 
     public String getImagePath() {
         return imagePath;
+    }
+
+    @Override
+    public String toString() {
+        return "Staff{" +
+                "id=" + id +
+                ", birthDay=" + birthDay +
+                ", birthPlace='" + birthPlace + '\'' +
+                ", sex=" + sex +
+                ", cin='" + cin + '\'' +
+                ", sitFam='" + sitFam + '\'' +
+                ", nationalite='" + nationalite + '\'' +
+                ", dateEmbauche='" + dateEmbauche + '\'' +
+                ", grade='" + grade + '\'' +
+                ", function='" + function + '\'' +
+                ", post='" + post + '\'' +
+                ", category='" + category + '\'' +
+                ", echelon=" + echelon +
+                ", entEffect='" + entEffect + '\'' +
+                ", sectionAnalytique='" + sectionAnalytique + '\'' +
+                ", regimeRetraite='" + regimeRetraite + '\'' +
+                ", affilRecore=" + affilRecore +
+                ", dateDerPromo='" + dateDerPromo + '\'' +
+                ", imagePath='" + imagePath + '\'' +
+                '}';
     }
 }

@@ -11,5 +11,6 @@ public interface StaffDao {
     int addStaffImage(int id,String path);
 
     int updateStaff(Staff staff);
+    Staff getStaffById(int id);
 
 }

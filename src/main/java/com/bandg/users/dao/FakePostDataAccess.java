@@ -17,7 +17,7 @@ public class FakePostDataAccess  implements PostDao {
 
     @Override
     public int insertPost(UUID id, Post post) {
-            db.add(new Post());
+
         return 1;
     }
 
