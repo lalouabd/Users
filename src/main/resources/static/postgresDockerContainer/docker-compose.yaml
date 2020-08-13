@@ -6,4 +6,4 @@ postgres:
   volumes:
     - /opt/postgresDatabase:/var/lib/postgresql
   ports:
-    - "5431:5432"
+    - "5432:5432"
