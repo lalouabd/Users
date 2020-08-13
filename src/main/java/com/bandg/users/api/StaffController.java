@@ -42,6 +42,7 @@ public class StaffController {
     )
     public int insertStaff( @RequestBody Staff staff)
     {
-         return staffService.insertSingleStaff(staff);
+
+        return staffService.insertSingleStaff(staff);
     }
 }
