@@ -46,4 +46,9 @@ public class FakeStaffDataAcces implements  StaffDao {
     public Staff getStaffById(int id) {
        return db.stream().filter(s->s.getId() == id).findFirst().orElse(null);
     }
+
+    @Override
+    public List<Staff> searchForStaff(String element) {
+        return null;
+    }
 }

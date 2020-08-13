@@ -55,7 +55,10 @@ public class StaffParser {
                     accepted.add(staff.get());
                 } else {
                  JSONObject jso = new JSONObject();
-                 jso.put("rejected",row1.getCell(0).getNumericCellValue());
+                 JSONObject st = new JSONObject();
+                 st.put("id" ,row1.getCell(0).getNumericCellValue() );
+                 st.put("reason","parsing reason");
+                 jso.put("rejected",st);
                     rejected.put(jso);
                 }
             }

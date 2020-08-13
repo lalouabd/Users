@@ -227,4 +227,8 @@ public class Staff {
                 ", imagePath='" + imagePath + '\'' +
                 '}';
     }
+
+    public String getPost() {
+        return post;
+    }
 }
