@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository("fake")
-public class FakeUserDataAcces implements  UserDao{
+public class FakeUserDataAccess implements  UserDao{
     private final List<User> db;
 
-    public FakeUserDataAcces() {
+    public FakeUserDataAccess() {
         this.db = new ArrayList<>();
     }
 

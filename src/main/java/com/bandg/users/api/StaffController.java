@@ -3,7 +3,11 @@ package com.bandg.users.api;
 import com.bandg.users.exceptions.Dao.NoSuchStaffException;
 import com.bandg.users.models.Staff;
 import com.bandg.users.service.StaffService;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sun.istack.internal.NotNull;
+import org.apache.poi.openxml4j.opc.ContentTypes;
+import org.apache.poi.openxml4j.opc.internal.ContentType;
+import org.assertj.core.util.Lists;
 import org.json.JSONObject;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +15,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
+import java.util.zip.ZipInputStream;
 
 @RestController("/api")
 public class StaffController {
@@ -90,7 +99,60 @@ public class StaffController {
             value = "/api/search/{element}")
     public List<Staff> search (@PathVariable("element") String element)
     {
+
         return staffService.searchForStaff(element);
     }
+
+    @PutMapping("/api/staff/setImage")
+    public  ResponseEntity SetStaffImage(@RequestBody() MultipartFile file) {
+        List<String> zipType = Lists.list(".zip",
+                "application/octet-stream",
+                "application/zip"
+                ,"application/x-zip",
+                "application/x-zip-compressed");
+        List<String > imageType = Lists.list(
+                ContentTypes.IMAGE_GIF,ContentTypes.IMAGE_JPEG,
+                ContentTypes.IMAGE_PNG,ContentTypes.EXTENSION_GIF,
+                ContentTypes.EXTENSION_JPG_1, ContentTypes.EXTENSION_JPG_2,
+                ContentTypes.EXTENSION_PNG
+        );
+        JSONObject ret = new JSONObject();
+
+        if (zipType.stream().filter(c-> c.equals(file.getContentType())).findAny().isPresent())
+        {
+            try {
+                ZipInputStream zip = new ZipInputStream(
+                        new ByteArrayInputStream(file.getBytes()));
+                ZipEntry entry = null;
+                while ((entry = zip.getNextEntry()) != null) {
+                        String extention = entry.getName().trim().substring(entry.getName().lastIndexOf("."));
+
+                    if (imageType.stream().filter(c-> c.equals(extention)).findAny().isPresent()) {
+                        try {
+                            staffService.inserStaffImage(entry.getExtra(), entry.getName());
+
+                        } catch (Exception e)
+                        {
+                            ret.put("rejected", e.toString());
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        else if (imageType.stream().filter(c-> c.equals(file.getContentType())).findAny().isPresent()) {
+            try {
+                staffService.inserStaffImage(file.getBytes(), file.getOriginalFilename());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+
+            return null;
+    }
+
 
 }

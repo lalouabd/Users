@@ -1,6 +1,8 @@
 package com.bandg.users.models;
 
+import com.bandg.users.config.FileConfig;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.Date;
 import java.util.UUID;
@@ -44,8 +46,26 @@ public class Staff {
     @JsonProperty("datederpromo")
     private  final String dateDerPromo; //17
     @JsonProperty("image")
-    private final String imagePath;
+    private  UUID imageid;
 
+    public UUID getImageid() {
+        return imageid;
+    }
+
+    public void setImageid(UUID imageid) {
+        this.imageid = imageid;
+    }
+
+    public String getImageLink() {
+        return imageLink;
+    }
+
+    @JsonProperty("image_link")
+    private final String imageLink;
+
+
+    @Autowired
+    private  FileConfig fileConfig;
 
 
     public Staff(
@@ -67,7 +87,7 @@ public class Staff {
             String regimeRetraite,
             int affilRecore,
             String dateDerPromo,
-                 String imagePath) {
+                 UUID imageid) {
         this.id = id;
         this.birthDay = birthDay;
         this.birthPlace = birthPlace;
@@ -86,7 +106,8 @@ public class Staff {
         this.regimeRetraite = regimeRetraite;
         this.affilRecore = affilRecore;
         this.dateDerPromo = dateDerPromo;
-        this.imagePath = imagePath;
+        this.imageid = imageid;
+        imageLink = "/api/download/"+ this.imageid;
     }
     public Staff(
             @JsonProperty("id") int id,
@@ -128,7 +149,11 @@ public class Staff {
         this.regimeRetraite = regimeRetraite;
         this.affilRecore = affilRecore;
         this.dateDerPromo = dateDerPromo;
-        this.imagePath  = "";
+        if (this.sex.equals(Gender.FEMALE))
+            this.imageid = fileConfig.getFDef().getId();
+        else
+            this.imageid = fileConfig.getMDef().getId();
+        imageLink = "/api/download/"+ this.imageid;
     }
     public int getId() {
         return id;
@@ -199,8 +224,8 @@ public class Staff {
         return dateDerPromo;
     }
 
-    public String getImagePath() {
-        return imagePath;
+    public UUID getImageId() {
+        return imageid;
     }
 
     @Override
@@ -224,7 +249,7 @@ public class Staff {
                 ", regimeRetraite='" + regimeRetraite + '\'' +
                 ", affilRecore=" + affilRecore +
                 ", dateDerPromo='" + dateDerPromo + '\'' +
-                ", imagePath='" + imagePath + '\'' +
+                ", imagePath='" + imageid + '\'' +
                 '}';
     }
 

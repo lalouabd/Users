@@ -5,3 +5,12 @@ app:
    password : postgres
    pool-size : 30
 
+file:
+  datasource:
+    FDef:
+      id: 53eaf05e-11c6-40c7-b5ea-6337d4583e43
+      path: "FDef.png"
+    MDef:
+      id: 358053d2-63ec-4c5d-9363-baa8f15c2a9f
+      path: "MDef.png"
+    prefix: "/opt/Bonedata/"

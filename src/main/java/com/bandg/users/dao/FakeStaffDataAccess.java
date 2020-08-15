@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 @Repository
-public class FakeStaffDataAcces implements  StaffDao {
+public class FakeStaffDataAccess implements  StaffDao {
    private  final List<Staff>  db;
-   public FakeStaffDataAcces()
+   public FakeStaffDataAccess()
    {
        db = new ArrayList<>();
    }

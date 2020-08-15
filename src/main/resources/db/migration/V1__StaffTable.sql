@@ -17,5 +17,5 @@ CREATE TABLE staff(
     regime_retraite varchar(300),
     affil_recore int,
     date_der_promo varchar(100),
-    image_link varchar(300) default 'defaultImage.png'
+    image_link UUID
 );

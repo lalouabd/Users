@@ -1,7 +1,6 @@
 package com.bandg.users.service;
 
 import com.bandg.users.dao.StaffDao;
-import com.bandg.users.exceptions.Dao.DuplicateStaffException;
 import com.bandg.users.models.Staff;
 import com.bandg.users.models.StaffParser;
 import org.json.JSONArray;
@@ -13,16 +12,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class StaffService {
     private  final StaffDao staffDao;
     private  final StaffParser staffParser;
+    private  final FileService fileService;
 
     @Autowired
-    public StaffService(@Qualifier("postgres") StaffDao staffDao, StaffParser staffParser) {
+    public StaffService(@Qualifier("postgres") StaffDao staffDao, StaffParser staffParser, FileService fileService) {
         this.staffDao = staffDao;
         this.staffParser = staffParser;
+        this.fileService = fileService;
     }
 
     public JSONArray insertByExcel(MultipartFile file) throws Exception
@@ -72,5 +74,25 @@ public class StaffService {
     }
     public List<Staff> searchForStaff(String element){
         return staffDao.searchForStaff(element);
+    }
+    public int updateStaffImage(){
+        return 1;
+    }
+
+    public int inserStaffImage(byte[] file, String name) {
+        int id  = Integer.parseInt(name.trim().split(".")[0]);
+        try {
+            Staff staff = getStaffById(id);
+            UUID imageid = fileService.insertFile(file, name);
+            staff.setImageid(imageid);
+            updateStaff(staff);
+
+        } catch (Exception e) {
+        throw new IllegalArgumentException("cant set image");
+        }
+
+
+        return  1;
+
     }
 }

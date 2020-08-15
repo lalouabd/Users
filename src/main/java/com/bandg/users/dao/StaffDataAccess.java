@@ -13,10 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository("postgres")
-public class StaffDataAcces implements StaffDao {
+public class StaffDataAccess implements StaffDao {
     private final JdbcTemplate jdbcTemplate;
 
-    public StaffDataAcces(JdbcTemplate jdbcTemplate) {
+    public StaffDataAccess(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -50,7 +50,8 @@ public class StaffDataAcces implements StaffDao {
                     staff.getEntEffect(),
                     staff.getRegimeRetraite(),
                     staff.getAffilRecore(),
-                    staff.getDateDerPromo()
+                    staff.getDateDerPromo(),
+                    staff.getImageId()
             );
             return 1;
         }
@@ -69,7 +70,9 @@ public class StaffDataAcces implements StaffDao {
 
     @Override
     public int addStaffImage(int id, String path) {
-        return 0;
+        String sql = "update staff set image_id=? where id = ?";
+        jdbcTemplate.update(sql ,  path, id);
+        return 1;
     }
 
     @Override
@@ -133,31 +136,24 @@ public class StaffDataAcces implements StaffDao {
     public List<Staff> searchForStaff(String element) {
         element = "%" + element + "%";
      String sql = "select * from staff where" +
-             " CONCAT(id,'')  like ? " +
+             " id::text like ? " +
              "or " +
              " cin like ? " +
              "or " +
              " sit_fam like ?" +
              " or " +
-             " grade like ?" +
-             " or " +
+
              " birth_place like ? " +
-             " or " +
-             " date_embauche like ?" +
-             " or " +
-             " ent_effect like ? " +
-             "or " +
-             " post like  like ?";
+             " or "+
+             " post like   ?";
             try{
                 List<Staff > staffs = jdbcTemplate.query(sql , new StaffRowMapper(),
                         element
                         , element
                         , element
                         , element
-                        , element
-                        , element
-                        , element
-                        , element
+                        ,element
+
 
                     );
                 return staffs;

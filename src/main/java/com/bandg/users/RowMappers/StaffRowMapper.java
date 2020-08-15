@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.UUID;
 
 public class StaffRowMapper implements RowMapper<Staff> {
 
@@ -34,7 +35,9 @@ public class StaffRowMapper implements RowMapper<Staff> {
                result.getString("regime_retraite"),
                result.getInt("affil_recore"),
                result.getString("date_der_promo"),
-               result.getString("image_link")
+              UUID.randomUUID().fromString(
+                      result.getString("image_link")
+              )
        );
         return stf;
     }
