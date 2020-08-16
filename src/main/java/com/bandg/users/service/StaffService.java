@@ -3,6 +3,7 @@ package com.bandg.users.service;
 import com.bandg.users.dao.StaffDao;
 import com.bandg.users.models.Staff;
 import com.bandg.users.models.StaffParser;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -70,25 +71,29 @@ public class StaffService {
     }
 
     public int  updateStaff(Staff staff) {
+
         return staffDao.updateStaff(staff);
     }
     public List<Staff> searchForStaff(String element){
         return staffDao.searchForStaff(element);
     }
-    public int updateStaffImage(){
-        return 1;
-    }
 
-    public int inserStaffImage(byte[] file, String name) {
-        int id  = Integer.parseInt(name.trim().split(".")[0]);
+    public int inserStaffImage(byte []file, String name) {
+
+        String fname = name.trim().split("\\.")[0];
+        if (fname.contains("("))
+            fname = fname.substring(0,fname.lastIndexOf("("));
+        int id  = Integer.parseInt(fname);
+
         try {
+            if (imageType.)
             Staff staff = getStaffById(id);
             UUID imageid = fileService.insertFile(file, name);
             staff.setImageid(imageid);
             updateStaff(staff);
 
         } catch (Exception e) {
-        throw new IllegalArgumentException("cant set image");
+          throw new IllegalArgumentException("error setting image");
         }
 
 

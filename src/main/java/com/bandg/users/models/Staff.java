@@ -48,24 +48,12 @@ public class Staff {
     @JsonProperty("image")
     private  UUID imageid;
 
-    public UUID getImageid() {
-        return imageid;
-    }
 
-    public void setImageid(UUID imageid) {
-        this.imageid = imageid;
-    }
-
-    public String getImageLink() {
-        return imageLink;
-    }
 
     @JsonProperty("image_link")
     private final String imageLink;
 
 
-    @Autowired
-    private  FileConfig fileConfig;
 
 
     public Staff(
@@ -149,12 +137,26 @@ public class Staff {
         this.regimeRetraite = regimeRetraite;
         this.affilRecore = affilRecore;
         this.dateDerPromo = dateDerPromo;
+     //   System.out.println(fileConfig.getFDef().getId() + "        " + fileConfig.getFDef().getPath());
         if (this.sex.equals(Gender.FEMALE))
-            this.imageid = fileConfig.getFDef().getId();
+            this.imageid = UUID.fromString("53eaf05e-11c6-40c7-b5ea-6337d4583e43");
         else
-            this.imageid = fileConfig.getMDef().getId();
+            this.imageid = UUID.fromString("358053d2-63ec-4c5d-9363-baa8f15c2a9f");
         imageLink = "/api/download/"+ this.imageid;
     }
+
+    public UUID getImageid() {
+        return imageid;
+    }
+
+    public void setImageid(UUID imageid) {
+        this.imageid = imageid;
+    }
+
+    public String getImageLink() {
+        return imageLink;
+    }
+
     public int getId() {
         return id;
     }

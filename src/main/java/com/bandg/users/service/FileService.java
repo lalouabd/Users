@@ -24,7 +24,7 @@ public class FileService {
 
     public UUID insertFile(byte[] file, String name){
 
-        String path = fileConfig.getPrefix() +name;
+        String path = fileConfig.getPrefix() + name;
        try{
         FileOutputStream  out= new FileOutputStream(new File(path));
         out.write(file);

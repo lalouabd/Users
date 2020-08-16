@@ -2,11 +2,14 @@ package com.bandg.users.api;
 
 import com.bandg.users.exceptions.Dao.NoSuchStaffException;
 import com.bandg.users.models.Staff;
+import com.bandg.users.models.Unrar;
 import com.bandg.users.service.StaffService;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import com.sun.istack.internal.NotNull;
 import org.apache.poi.openxml4j.opc.ContentTypes;
 import org.apache.poi.openxml4j.opc.internal.ContentType;
+import org.apache.poi.openxml4j.util.ZipSecureFile;
 import org.assertj.core.util.Lists;
 import org.json.JSONObject;
 import org.springframework.http.MediaType;
@@ -15,12 +18,15 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
+import java.util.zip.ZipOutputStream;
 
 @RestController("/api")
 public class StaffController {
@@ -110,6 +116,7 @@ public class StaffController {
                 "application/zip"
                 ,"application/x-zip",
                 "application/x-zip-compressed");
+
         List<String > imageType = Lists.list(
                 ContentTypes.IMAGE_GIF,ContentTypes.IMAGE_JPEG,
                 ContentTypes.IMAGE_PNG,ContentTypes.EXTENSION_GIF,
@@ -121,37 +128,43 @@ public class StaffController {
         if (zipType.stream().filter(c-> c.equals(file.getContentType())).findAny().isPresent())
         {
             try {
-                ZipInputStream zip = new ZipInputStream(
-                        new ByteArrayInputStream(file.getBytes()));
-                ZipEntry entry = null;
-                while ((entry = zip.getNextEntry()) != null) {
-                        String extention = entry.getName().trim().substring(entry.getName().lastIndexOf("."));
+                File tmp = new File("/opt/Bonedata/tmp");
+                tmp.mkdirs();
+                file.transferTo(Paths.get(tmp.getAbsolutePath()
+                        +"/" +
+                        file.getOriginalFilename()));
 
-                    if (imageType.stream().filter(c-> c.equals(extention)).findAny().isPresent()) {
+                File p = new File (tmp.getAbsolutePath()
+                        +"/" +
+                        file.getOriginalFilename());
+
+                if (p.exists()) {
+                    Unrar.extract(p, tmp.getPath());
+                    p.delete();
+                    for (File img : tmp.listFiles())
+                    {
                         try {
-                            staffService.inserStaffImage(entry.getExtra(), entry.getName());
-
-                        } catch (Exception e)
+                            staffService.inserStaffImage(Files.readAllBytes(Paths.get(img.getAbsolutePath())), img.getName());
+                        }catch(Exception e)
                         {
                             ret.put("rejected", e.toString());
                         }
+                        img.delete();
                     }
+
                 }
             } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        else if (imageType.stream().filter(c-> c.equals(file.getContentType())).findAny().isPresent()) {
-            try {
-                staffService.inserStaffImage(file.getBytes(), file.getOriginalFilename());
-            } catch (IOException e) {
-                e.printStackTrace();
+                return ResponseEntity.status(600).body("error Parsing file");
             }
 
+
+        }
+        else {
+            return ResponseEntity.status(400).body("File format incorrect");
         }
 
 
-            return null;
+            return ResponseEntity.status(200).body(ret);
     }
 
 

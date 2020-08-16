@@ -30,7 +30,7 @@ public class StaffDataAccess implements StaffDao {
         }catch (NoSuchStaffException e)
         {
 
-            String sql = "insert into staff values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+            String sql = "insert into staff values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
 
             jdbcTemplate.update(sql,
                     staff.getId(),
@@ -95,6 +95,7 @@ public class StaffDataAccess implements StaffDao {
                 ",regime_retraite=?" +
                 ",affil_recore=?" +
                 ",date_der_promo=? " +
+                ",image_link=?" +
                 " where id=?";
             jdbcTemplate.update(sql,
                     staff.getBirthDay(),
@@ -114,6 +115,7 @@ public class StaffDataAccess implements StaffDao {
                     staff.getRegimeRetraite(),
                     staff.getAffilRecore(),
                     staff.getDateDerPromo(),
+                    staff.getImageId(),
                     staff.getId());
         return 1;
     }
