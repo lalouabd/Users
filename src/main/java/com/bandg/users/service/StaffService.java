@@ -9,6 +9,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -78,6 +79,7 @@ public class StaffService {
         return staffDao.searchForStaff(element);
     }
 
+
     public int inserStaffImage(byte []file, String name) {
 
         String fname = name.trim().split("\\.")[0];
@@ -86,8 +88,9 @@ public class StaffService {
         int id  = Integer.parseInt(fname);
 
         try {
-            if (imageType.)
+
             Staff staff = getStaffById(id);
+            fileService.deleteFile(staff.getImageId());
             UUID imageid = fileService.insertFile(file, name);
             staff.setImageid(imageid);
             updateStaff(staff);

@@ -40,4 +40,21 @@ public class FileService {
         return fileDao.getFileById(id);
     }
 
+    public void deleteFile(UUID imageId) {
+        if (
+                !imageId.equals(UUID.fromString(
+                        fileConfig.getFDef().get(0))
+                )
+                &&
+                !imageId.equals(UUID.fromString(
+                        fileConfig.getMDef().get(0))) )
+        {
+            try {
+                fileDao.deleteFileById(imageId);
+            }catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
 }

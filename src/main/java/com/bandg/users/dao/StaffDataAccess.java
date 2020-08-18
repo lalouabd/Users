@@ -77,7 +77,7 @@ public class StaffDataAccess implements StaffDao {
 
     @Override
     public int updateStaff(Staff staff) {
-        getStaffById(staff.getId());
+       Staff stf = getStaffById(staff.getId());
         String sql = "update staff set birth_day=? ," +
                 " birth_place=?," +
                 "sex =?" +
@@ -115,7 +115,9 @@ public class StaffDataAccess implements StaffDao {
                     staff.getRegimeRetraite(),
                     staff.getAffilRecore(),
                     staff.getDateDerPromo(),
-                    staff.getImageId(),
+                   staff.getImageId()!=null?
+                           staff.getImageId():
+                           stf.getImageId(),
                     staff.getId());
         return 1;
     }

@@ -2,6 +2,7 @@ package com.bandg.users.security;
 
 import org.assertj.core.util.Lists;
 import org.assertj.core.util.Sets;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 //import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.nio.channels.WritableByteChannel;
@@ -13,7 +14,6 @@ import java.util.stream.Collectors;
 import static com.bandg.users.security.ApplicationUserPermission.READ;
 import static com.bandg.users.security.ApplicationUserPermission.WRITE;
 public enum ApplicationUserRole {
-/*
     ADMIN(Sets.newHashSet(Lists.list(READ,WRITE))),
     REGULARUSER(Sets.newHashSet(Lists.list(READ)));
 
@@ -33,5 +33,5 @@ public enum ApplicationUserRole {
                 .collect(Collectors.toSet());
         permissions.add(new SimpleGrantedAuthority("ROLE_" + this.name()));
         return permissions;
-    }*/
+    }
 }

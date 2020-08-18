@@ -14,6 +14,7 @@ import org.assertj.core.util.Lists;
 import org.json.JSONObject;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -95,6 +96,7 @@ public class StaffController {
             staffService.updateStaff(staff);
         }catch (Exception e)
         {
+            e.printStackTrace();
             if (e instanceof NoSuchStaffException)
               return  ResponseEntity.status(404).body(e.toString());
             return ResponseEntity.status(600).body(e.toString());
@@ -108,6 +110,7 @@ public class StaffController {
 
         return staffService.searchForStaff(element);
     }
+
 
     @PutMapping("/api/staff/setImage")
     public  ResponseEntity SetStaffImage(@RequestBody() MultipartFile file) {
@@ -164,7 +167,7 @@ public class StaffController {
         }
 
 
-            return ResponseEntity.status(200).body(ret);
+            return ResponseEntity.status(200).body(ret.toString());
     }
 
 

@@ -1,8 +1,13 @@
 package com.bandg.users.models;
 
 import com.bandg.users.dao.PostDao;
+import com.bandg.users.security.ApplicationUserPermission;
+import com.bandg.users.security.ApplicationUserRole;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 /*
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -13,9 +18,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.sql.Date;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
-public class User   {
+import static com.bandg.users.security.ApplicationUserRole.ADMIN;
+import static com.bandg.users.security.ApplicationUserRole.REGULARUSER;
+
+public class User  implements UserDetails {
 
     @JsonProperty("email")
     private final String email;
@@ -23,48 +32,39 @@ public class User   {
     private final String fullName;
     @JsonProperty("dob")
     private final Date dob;
+    @JsonProperty("Authorities")
+    private final Set<SimpleGrantedAuthority> authorities;
 
-   // @JsonProperty("Authorities")
-   // private final List<SimpleGrantedAuthority> authorities;
-    @JsonProperty("image")
-    private final String imageLink;
-    @JsonProperty("password")
+    @JsonProperty("imageId")
+    private UUID imageId;
+
     private final String password;
-    @JsonProperty("postId")
-    private final UUID  postId;
-
+    @JsonProperty("post")
+    private final String   post;
     private  boolean isActivated;
 
     private  boolean isLocked;
 
-    @Autowired
-    private   PostDao postdao;
-
     public User(
-            String email,
-            String fullName,
-            Date dob,
-         //   List<SimpleGrantedAuthority> authorities,
-            String imageLink,
-            String password,
-            UUID postId,
-            boolean isActivated,
-            boolean isLocked
+            @JsonProperty("email") String email,
+            @JsonProperty("fullName")String fullName,
+            @JsonProperty("dob")  Date dob,
+            @JsonProperty("level")int level,
+            @JsonProperty("password") String password,
+            @JsonProperty("post") String post
     ) {
 
         this.email = email;
         this.fullName = fullName;
         this.dob = dob;
-       // this.authorities = authorities;
-        this.imageLink = imageLink;
+        this.authorities = REGULARUSER.getGrantedAuthorities();
         this.password = password;
-        this.postId = postId;
-        this.isActivated = isActivated;
-        this.isLocked = isLocked;
+        this.post = post;
+        this.isActivated = false;
+        this.isLocked = true;
     }
 
-
- /*   @Override
+   @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;
     }
@@ -100,5 +100,5 @@ public class User   {
     public boolean isEnabled() {
 
         return isActivated;
-    }*/
+    }
 }
