@@ -18,4 +18,5 @@ CREATE TABLE staff(
     affil_recore int,
     date_der_promo varchar(100),
     image_link UUID
+
 );

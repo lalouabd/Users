@@ -2,6 +2,7 @@ package com.bandg.users.api;
 
 import com.bandg.users.models.MyFile;
 import com.bandg.users.service.FileService;
+import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -24,7 +25,7 @@ public class MyFileController {
     public MyFileController(FileService fileService) {
         this.fileService = fileService;
     }
-
+    
     @GetMapping("/api/download/{id}")
     public ResponseEntity downloadFile(@PathVariable("id") UUID id) {
         MyFile file = fileService.getFileBytesById(id);

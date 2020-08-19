@@ -20,3 +20,9 @@ file:
     -  "358053d2-63ec-4c5d-9363-baa8f15c2a9f"
     -  "MDef.png"
   prefix: "/opt/Bonedata/"
+
+application:
+  jwt:
+    secretKey: aait-ham_mbistamiMabghachikhdem
+    tokenPrefix: Bearer
+    tokenExpirationAfterDays: 10
