@@ -3,7 +3,11 @@ spring:
     multipart:
       max-file-size: 50MB
       max-request-size: 50MB
-
+application:
+  jwt:
+    secretKey: aaitham.mbistamiMabghachikhdemaaitham.mbistamiMabghachikhdem
+    tokenPrefix: Bearer
+    tokenExpirationAfterDays: 10
 
 app:
  datasource :
@@ -21,8 +25,3 @@ file:
     -  "MDef.png"
   prefix: "/opt/Bonedata/"
 
-application:
-  jwt:
-    secretKey: aait-ham_mbistamiMabghachikhdem
-    tokenPrefix: Bearer
-    tokenExpirationAfterDays: 10

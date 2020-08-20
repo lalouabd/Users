@@ -1,11 +1,15 @@
 package com.bandg.users.config;
 
+import lombok.NoArgsConstructor;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
 
 @Configuration
 @ConfigurationProperties(prefix = "application.jwt")
+@EnableConfigurationProperties
+
 public class JwtConfig {
 
     private String secretKey;
@@ -20,6 +24,7 @@ public class JwtConfig {
     }
 
     public void setSecretKey(String secretKey) {
+        System.out.println("this is secret " +secretKey);
         this.secretKey = secretKey;
     }
 

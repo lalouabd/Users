@@ -31,7 +31,12 @@ public class User  implements UserDetails {
     private final Set<SimpleGrantedAuthority> authorities;
     @JsonProperty("imageId")
     private UUID imageId;
-    private final String password;
+    private  String password;
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @JsonProperty("post")
     private final String   post;
     @JsonProperty("gender")
@@ -39,6 +44,8 @@ public class User  implements UserDetails {
 
     private  boolean isActivated;
     private  boolean isLocked;
+
+
 
     public User(
             @JsonProperty("email") String email,
@@ -79,7 +86,7 @@ public class User  implements UserDetails {
         this.fullName = fullName;
         this.dob = dob;
         this.gender = gender;
-        this.authorities = isAdmin == 1 ?
+        this.authorities = isAdmin == 0 ?
                 REGULARUSER.getGrantedAuthorities():
                 ADMIN.getGrantedAuthorities();
         this.password = password;
@@ -108,7 +115,7 @@ public class User  implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
@@ -119,12 +126,32 @@ public class User  implements UserDetails {
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
 
         return isActivated;
+    }
+
+    public String getPost() {
+        return post;
+    }
+
+    public Date getDob() {
+        return dob;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public UUID getImageId() {
+        return imageId;
+    }
+
+    public Gender getGender() {
+        return gender;
     }
 }

@@ -16,14 +16,6 @@ import java.util.UUID;
 @EnableConfigurationProperties
 @NoArgsConstructor
 public class FileConfig {
-//    @Value("${datasource.FDef.id}")
-//    private UUID FdefID;
-//    @Value("${datasource.MDef.id}")
-//    private UUID MdefId;
-//    @Value("${datasource.MDef.path}")
-//    private String  MdefPath;
-//    @Value("${datasource.FDef.path}")
-//    private String FdefPath;
 
     private List<String > FDef;
    private List<String> MDef;

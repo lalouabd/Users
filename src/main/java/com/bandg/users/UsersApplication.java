@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 
-@EnableAsync
+
 @SpringBootApplication
 public class UsersApplication {
 

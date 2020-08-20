@@ -11,7 +11,7 @@ public class PostgresConfig {
     @Bean
     @ConfigurationProperties("app.datasource")
     public HikariDataSource hikariDataSource() {
-        System.out.println("hira");
+
         return DataSourceBuilder
                 .create()
                 .type(HikariDataSource.class)

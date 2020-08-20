@@ -1,4 +1,6 @@
 package com.bandg.users.jwt;
 
-public class JwtUsernameAndPasswordAuthentificationFilter extends   UsernamePasswordAuthenticationFilter {
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+public class JwtUsernameAndPasswordAuthentificationFilter extends UsernamePasswordAuthenticationFilter {
 }
