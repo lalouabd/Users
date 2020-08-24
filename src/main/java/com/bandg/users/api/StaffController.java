@@ -15,6 +15,7 @@ import org.json.JSONObject;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -36,6 +37,7 @@ public class StaffController {
     public StaffController(StaffService staffService) {
         this.staffService = staffService;
     }
+    @PreAuthorize("hasAuthority('write')")
     @PostMapping("/api/addbyexcel")
     public ResponseEntity insertStaffByExcel(@RequestBody() MultipartFile file){
         String res = "done";
@@ -48,6 +50,7 @@ public class StaffController {
         }
             return ResponseEntity.status(200).body(res);
     }
+    @PreAuthorize("hasAuthority('read')")
     @GetMapping("/api/getStaff/{id}")
     public ResponseEntity getStaffById(@PathVariable("id") int id)
     {
@@ -61,6 +64,7 @@ public class StaffController {
         }
         return ResponseEntity.status(200).body(staff);
     }
+    @PreAuthorize("hasAuthority('write')")
         @DeleteMapping("/api/deleteStaff/{id}")
     public ResponseEntity deleteStaffById(@PathVariable("id") int id){
 
@@ -73,6 +77,7 @@ public class StaffController {
         }
         return ResponseEntity.status(200).body("staff(id =" + id + ") Deleted successfully");
     }
+    @PreAuthorize("hasAuthority('write')")
     @PostMapping(
             value = "/api/addSingleStaff",
             consumes = MediaType.APPLICATION_JSON_VALUE
@@ -89,6 +94,8 @@ public class StaffController {
         }
         return ResponseEntity.status(200).body(res);
     }
+
+    @PreAuthorize("hasAuthority('write')")
     @PutMapping(value = "/api/updateStaff",
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity updateStaff(@RequestBody @NotNull  Staff staff){
@@ -103,6 +110,7 @@ public class StaffController {
         }
         return ResponseEntity.status(200).body("staff (id: " +staff.getId() +") updated successfully");
     }
+    @PreAuthorize("hasAuthority('read')")
     @GetMapping(
             value = "/api/search/{element}")
     public List<Staff> search (@PathVariable("element") String element)
@@ -111,7 +119,7 @@ public class StaffController {
         return staffService.searchForStaff(element);
     }
 
-
+    @PreAuthorize("hasAuthority('write')")
     @PutMapping("/api/staff/setImage")
     public  ResponseEntity SetStaffImage(@RequestBody() MultipartFile file) {
         List<String> zipType = Lists.list(".zip",

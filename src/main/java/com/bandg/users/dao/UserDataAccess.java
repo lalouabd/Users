@@ -36,8 +36,8 @@ public class UserDataAccess  implements UserDao{
                     user.getPassword(),
                     user.getGender().toString(),
                     user.isEnabled() ? 1:0,
-                    user.isAccountNonLocked()?1:0,
-                    user.getAuthorities().containsAll(REGULARUSER.getGrantedAuthorities())?0:1,
+                    user.isAccountNonLocked() ? 0:1,
+                    user.getAuthorities().containsAll(REGULARUSER.getGrantedAuthorities())?1:0,
                     user.getImageId()
                     );
             return 1;

@@ -8,6 +8,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.MediaTypeFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,7 +26,7 @@ public class MyFileController {
     public MyFileController(FileService fileService) {
         this.fileService = fileService;
     }
-    
+    @PreAuthorize("hasAuthority('write')")
     @GetMapping("/api/download/{id}")
     public ResponseEntity downloadFile(@PathVariable("id") UUID id) {
         MyFile file = fileService.getFileBytesById(id);

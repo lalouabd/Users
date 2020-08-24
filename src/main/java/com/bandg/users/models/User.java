@@ -93,7 +93,7 @@ public class User  implements UserDetails {
         this.post = post;
         this.imageId = imageId;
         this.isActivated = isActivated == 1;
-        this.isLocked = isLocked == 1;
+        this.isLocked = isLocked == 0;
 
     }
 
@@ -121,7 +121,7 @@ public class User  implements UserDetails {
     @Override
     public boolean isAccountNonLocked()
     {
-        return isLocked;
+        return !isLocked;
     }
 
     @Override

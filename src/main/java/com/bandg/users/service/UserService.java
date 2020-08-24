@@ -24,7 +24,6 @@ public class UserService implements UserDetailsService {
 
     public int insertUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        System.out.println("ins");
         return userDao.insertUser(user);
     }
 
